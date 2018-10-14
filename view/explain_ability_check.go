@@ -29,4 +29,5 @@ func ExplainAbilityCheck(summary domain.AbilityCheckSummary) {
 	fmt.Printf("\n%s\n", message)
 	fmt.Println(summary.Throw.Summarise(summary.Dice))
 	fmt.Printf("Add a %s modifier (abilities section on character sheet)\n", summary.Modifier.String())
+	fmt.Println(summary.SummariseTarget())
 }

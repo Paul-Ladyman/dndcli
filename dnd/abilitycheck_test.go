@@ -13,6 +13,7 @@ func TestStrengthAbilityCheck(t *testing.T) {
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("str", "")
 	if result != expected {
@@ -27,6 +28,7 @@ func TestDexterityAbilityCheck(t *testing.T) {
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("dex", "")
 	if result != expected {
@@ -41,6 +43,7 @@ func TestConstitutionAbilityCheck(t *testing.T) {
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("con", "")
 	if result != expected {
@@ -55,6 +58,7 @@ func TestIntelligenceAbilityCheck(t *testing.T) {
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("int", "")
 	if result != expected {
@@ -69,6 +73,7 @@ func TestWisdomAbilityCheck(t *testing.T) {
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("wis", "")
 	if result != expected {
@@ -83,6 +88,7 @@ func TestCharismaAbilityCheck(t *testing.T) {
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("cha", "")
 	if result != expected {
@@ -97,6 +103,7 @@ func TestAbilityCheckWithAdvantage(t *testing.T) {
 		Circumstance: domain.Advantage,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 2, Preference: domain.Higher},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("cha", "adv")
 	if result != expected {
@@ -111,6 +118,7 @@ func TestAbilityCheckWithDisadvantage(t *testing.T) {
 		Circumstance: domain.Disadvantage,
 		Dice:         domain.D20,
 		Throw:        domain.Throw{Number: 2, Preference: domain.Lower},
+		Target:       domain.DC,
 	}
 	result, _ := AbilityCheck("cha", "dis")
 	if result != expected {

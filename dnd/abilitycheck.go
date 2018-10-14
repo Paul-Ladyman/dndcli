@@ -12,5 +12,6 @@ func AbilityCheck(abilityString string, circumstanceString string) (domain.Abili
 		Circumstance: circumstance,
 		Dice:         domain.D20,
 		Throw:        domain.ThrowFactory(circumstance),
+		Target:       domain.DC,
 	}, nil
 }
