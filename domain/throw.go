@@ -18,6 +18,10 @@ type Throw struct {
 	Preference ThrowPreference
 }
 
+func (throw Throw) String() string {
+	return fmt.Sprintf("Throw {Number: %d, Preference: %s}", throw.Number, throw.Preference)
+}
+
 func (throw Throw) Summarise(dice Dice) string {
 	if throw.Number > 1 {
 		return fmt.Sprintf("Throw a %d%s and use the %s value", throw.Number, dice, throw.Preference)

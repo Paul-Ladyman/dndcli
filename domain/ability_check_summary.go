@@ -10,6 +10,19 @@ type AbilityCheckSummary struct {
 	Dice         Dice
 	Throw        Throw
 	Target       Target
+	Proficient   bool
+}
+
+func (summary AbilityCheckSummary) String() string {
+	return fmt.Sprintf(`AbilityCheckSummary {
+		Ability: %s,
+		Modifier: %s,
+		Circumstance: %s,
+		Dice: %s,
+		Throw: %s,
+		Target: %s,
+		Proficient: %t
+	}`, summary.Ability, summary.Modifier, summary.Circumstance, summary.Dice, summary.Throw, summary.Target, summary.Proficient)
 }
 
 // SummariseAbilityAndCircumstance summarises what check to make and whether it has
@@ -36,5 +49,13 @@ func (summary AbilityCheckSummary) SummariseTarget() string {
 
 // SummariseModifier summarises which modifier to apply
 func (summary AbilityCheckSummary) SummariseModifier() string {
-	return fmt.Sprintf("Add a %s modifier (abilities section on character sheet)", summary.Modifier)
+	return fmt.Sprintf("Add the player's %s modifier (abilities section on character sheet)", summary.Modifier)
+}
+
+// SummariseProficiency summarises whether a proficiency bonus should be added
+func (summary AbilityCheckSummary) SummariseProficiency() string {
+	if summary.Proficient {
+		return "Add the player's proficiency bonus (proficiency bonus section on character sheet)"
+	}
+	return ""
 }
