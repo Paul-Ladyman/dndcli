@@ -12,7 +12,7 @@ func TestStrengthAbilityCheck(t *testing.T) {
 		Modifier:     domain.Strength,
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Roll:         domain.Roll{Number: 1, Preference: domain.Only},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -28,7 +28,7 @@ func TestDexterityAbilityCheck(t *testing.T) {
 		Modifier:     domain.Dexterity,
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Roll:         domain.Roll{Number: 1, Preference: domain.Only},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -44,7 +44,7 @@ func TestConstitutionAbilityCheck(t *testing.T) {
 		Modifier:     domain.Constitution,
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Roll:         domain.Roll{Number: 1, Preference: domain.Only},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -60,7 +60,7 @@ func TestIntelligenceAbilityCheck(t *testing.T) {
 		Modifier:     domain.Intelligence,
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Roll:         domain.Roll{Number: 1, Preference: domain.Only},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -76,7 +76,7 @@ func TestWisdomAbilityCheck(t *testing.T) {
 		Modifier:     domain.Wisdom,
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Roll:         domain.Roll{Number: 1, Preference: domain.Only},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -92,7 +92,7 @@ func TestCharismaAbilityCheck(t *testing.T) {
 		Modifier:     domain.Charisma,
 		Circumstance: domain.Neutral,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 1, Preference: domain.Only},
+		Roll:         domain.Roll{Number: 1, Preference: domain.Only},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -108,7 +108,7 @@ func TestAbilityCheckWithAdvantage(t *testing.T) {
 		Modifier:     domain.Charisma,
 		Circumstance: domain.Advantage,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 2, Preference: domain.Higher},
+		Roll:         domain.Roll{Number: 2, Preference: domain.Higher},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -124,7 +124,7 @@ func TestAbilityCheckWithDisadvantage(t *testing.T) {
 		Modifier:     domain.Charisma,
 		Circumstance: domain.Disadvantage,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 2, Preference: domain.Lower},
+		Roll:         domain.Roll{Number: 2, Preference: domain.Lower},
 		Target:       domain.DC,
 		Proficient:   false,
 	}
@@ -140,7 +140,7 @@ func TestAbilityCheckWithToolProficiency(t *testing.T) {
 		Modifier:     domain.Charisma,
 		Circumstance: domain.Disadvantage,
 		Dice:         domain.D20,
-		Throw:        domain.Throw{Number: 2, Preference: domain.Lower},
+		Roll:         domain.Roll{Number: 2, Preference: domain.Lower},
 		Target:       domain.DC,
 		Proficient:   true,
 	}

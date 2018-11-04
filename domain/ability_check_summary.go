@@ -8,7 +8,7 @@ type AbilityCheckSummary struct {
 	Modifier     Ability
 	Circumstance Circumstance
 	Dice         Dice
-	Throw        Throw
+	Roll         Roll
 	Target       Target
 	Proficient   bool
 }
@@ -19,10 +19,10 @@ func (summary AbilityCheckSummary) String() string {
 		Modifier: %s,
 		Circumstance: %s,
 		Dice: %s,
-		Throw: %s,
+		Roll: %s,
 		Target: %s,
 		Proficient: %t
-	}`, summary.Ability, summary.Modifier, summary.Circumstance, summary.Dice, summary.Throw, summary.Target, summary.Proficient)
+	}`, summary.Ability, summary.Modifier, summary.Circumstance, summary.Dice, summary.Roll, summary.Target, summary.Proficient)
 }
 
 // SummariseAbilityAndCircumstance summarises what check to make and whether it has
@@ -37,9 +37,9 @@ func (summary AbilityCheckSummary) SummariseAbilityAndCircumstance() string {
 	return abilitySummary
 }
 
-// SummariseThrow summarises what dice to throw and how many times
-func (summary AbilityCheckSummary) SummariseThrow() string {
-	return fmt.Sprintf(summary.Throw.Summarise(summary.Dice))
+// SummariseRoll summarises what dice to roll and how many times
+func (summary AbilityCheckSummary) SummariseRoll() string {
+	return fmt.Sprintf(summary.Roll.Summarise(summary.Dice))
 }
 
 // SummariseTarget summarises whether to use DC or AC as the check target

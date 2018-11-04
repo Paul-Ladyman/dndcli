@@ -25,7 +25,7 @@ func AbilityCheck(abilityString string, circumstanceString string, toolProficien
 		Modifier:     ability,
 		Circumstance: circumstance,
 		Dice:         domain.D20,
-		Throw:        domain.ThrowFactory(circumstance),
+		Roll:         domain.RollFactory(circumstance),
 		Target:       domain.DC,
 		Proficient:   toolProficiency,
 	}, nil

@@ -9,7 +9,7 @@ var summary = AbilityCheckSummary{
 	Strength,
 	Neutral,
 	D20,
-	Throw{1, Higher},
+	Roll{1, Higher},
 	DC,
 	true,
 }
@@ -22,9 +22,9 @@ func TestSummariseTarget(t *testing.T) {
 	}
 }
 
-func TestSummariseThrow(t *testing.T) {
-	expected := "Throw a d20"
-	result := summary.SummariseThrow()
+func TestSummariseRoll(t *testing.T) {
+	expected := "Roll a d20"
+	result := summary.SummariseRoll()
 	if result != expected {
 		t.Errorf(" %q was not equal to %q", result, expected)
 	}
@@ -52,7 +52,7 @@ func TestSummariseAbilityAndCircumstanceAdv(t *testing.T) {
 		Dexterity,
 		Advantage,
 		D20,
-		Throw{1, Higher},
+		Roll{1, Higher},
 		DC,
 		false,
 	}
@@ -69,7 +69,7 @@ func TestSummariseAbilityAndCircumstanceDis(t *testing.T) {
 		Intelligence,
 		Disadvantage,
 		D20,
-		Throw{1, Higher},
+		Roll{1, Higher},
 		DC,
 		false,
 	}
@@ -94,7 +94,7 @@ func TestSummariseProficiencyFalse(t *testing.T) {
 		Intelligence,
 		Disadvantage,
 		D20,
-		Throw{1, Higher},
+		Roll{1, Higher},
 		DC,
 		false,
 	}
