@@ -93,4 +93,10 @@ func TestAbilityFactoryUnknown(t *testing.T) {
 	if err == nil {
 		t.Errorf("Expected error, actually got %q", result)
 	}
+
+	expectedString := "unknown"
+	actualString := result.String()
+	if actualString != expectedString {
+		t.Errorf("Wrong ability string. %q was not equal to %q", actualString, expectedString)
+	}
 }

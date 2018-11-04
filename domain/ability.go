@@ -27,8 +27,10 @@ func (ability Ability) String() string {
 		return "intelligence"
 	case Wisdom:
 		return "wisdom"
-	default:
+	case Charisma:
 		return "charisma"
+	default:
+		return "unknown"
 	}
 }
 
