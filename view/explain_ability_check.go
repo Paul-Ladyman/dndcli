@@ -8,7 +8,7 @@ import (
 
 // ExplainAbilityCheck will guide the DM through making the specified ability check
 func ExplainAbilityCheck(summary domain.AbilityCheckSummary) {
-	fmt.Printf("\n%s:\n", summary.SummariseAbilityAndCircumstance())
+	fmt.Printf("\n%s:\n", summary.SummariseAbility())
 	fmt.Println(summary.SummariseRoll())
 	fmt.Println(summary.SummariseModifier())
 

@@ -7,6 +7,7 @@ import (
 var summary = AbilityCheckSummary{
 	Strength,
 	Strength,
+	Skill{},
 	Neutral,
 	D20,
 	Roll{1, Higher},
@@ -30,9 +31,63 @@ func TestSummariseRoll(t *testing.T) {
 	}
 }
 
-func TestSummariseAbilityAndCircumstance(t *testing.T) {
+func TestSummariseAbility(t *testing.T) {
 	expected := "Make a strength check"
-	result := summary.SummariseAbilityAndCircumstance()
+	result := summary.SummariseAbility()
+	if result != expected {
+		t.Errorf(" %q was not equal to %q", result, expected)
+	}
+}
+
+func TestSummariseAbilityAdv(t *testing.T) {
+	summary := AbilityCheckSummary{
+		Dexterity,
+		Dexterity,
+		Skill{},
+		Advantage,
+		D20,
+		Roll{1, Higher},
+		DC,
+		false,
+	}
+	expected := "Make a dexterity check with advantage"
+	result := summary.SummariseAbility()
+	if result != expected {
+		t.Errorf(" %q was not equal to %q", result, expected)
+	}
+}
+
+func TestSummariseAbilityDis(t *testing.T) {
+	summary := AbilityCheckSummary{
+		Intelligence,
+		Intelligence,
+		Skill{},
+		Disadvantage,
+		D20,
+		Roll{1, Higher},
+		DC,
+		false,
+	}
+	expected := "Make a intelligence check with disadvantage"
+	result := summary.SummariseAbility()
+	if result != expected {
+		t.Errorf(" %q was not equal to %q", result, expected)
+	}
+}
+
+func TestSummariseAbilityWithSkill(t *testing.T) {
+	summary := AbilityCheckSummary{
+		Strength,
+		Strength,
+		Athletics,
+		Neutral,
+		D20,
+		Roll{1, Higher},
+		DC,
+		false,
+	}
+	expected := "Make a strength (athletics) check"
+	result := summary.SummariseAbility()
 	if result != expected {
 		t.Errorf(" %q was not equal to %q", result, expected)
 	}
@@ -41,40 +96,6 @@ func TestSummariseAbilityAndCircumstance(t *testing.T) {
 func TestSummariseModifier(t *testing.T) {
 	expected := "Add the player's strength modifier (abilities section on character sheet)"
 	result := summary.SummariseModifier()
-	if result != expected {
-		t.Errorf(" %q was not equal to %q", result, expected)
-	}
-}
-
-func TestSummariseAbilityAndCircumstanceAdv(t *testing.T) {
-	summary := AbilityCheckSummary{
-		Dexterity,
-		Dexterity,
-		Advantage,
-		D20,
-		Roll{1, Higher},
-		DC,
-		false,
-	}
-	expected := "Make a dexterity check with advantage"
-	result := summary.SummariseAbilityAndCircumstance()
-	if result != expected {
-		t.Errorf(" %q was not equal to %q", result, expected)
-	}
-}
-
-func TestSummariseAbilityAndCircumstanceDis(t *testing.T) {
-	summary := AbilityCheckSummary{
-		Intelligence,
-		Intelligence,
-		Disadvantage,
-		D20,
-		Roll{1, Higher},
-		DC,
-		false,
-	}
-	expected := "Make a intelligence check with disadvantage"
-	result := summary.SummariseAbilityAndCircumstance()
 	if result != expected {
 		t.Errorf(" %q was not equal to %q", result, expected)
 	}
@@ -92,6 +113,7 @@ func TestSummariseProficiencyFalse(t *testing.T) {
 	summary := AbilityCheckSummary{
 		Intelligence,
 		Intelligence,
+		Skill{},
 		Disadvantage,
 		D20,
 		Roll{1, Higher},

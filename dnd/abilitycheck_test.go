@@ -154,6 +154,7 @@ func TestAbilityCheckWithSkill(t *testing.T) {
 	expected := domain.AbilityCheckSummary{
 		Ability:      domain.Strength,
 		Modifier:     domain.Strength,
+		Skill:        domain.Athletics,
 		Circumstance: domain.Disadvantage,
 		Dice:         domain.D20,
 		Roll:         domain.Roll{Number: 2, Preference: domain.Lower},
@@ -170,6 +171,7 @@ func TestAbilityCheckWithSkillProficiency(t *testing.T) {
 	expected := domain.AbilityCheckSummary{
 		Ability:      domain.Strength,
 		Modifier:     domain.Strength,
+		Skill:        domain.Athletics,
 		Circumstance: domain.Disadvantage,
 		Dice:         domain.D20,
 		Roll:         domain.Roll{Number: 2, Preference: domain.Lower},
@@ -186,6 +188,7 @@ func TestAbilityCheckWithSkillAndToolProficiency(t *testing.T) {
 	expected := domain.AbilityCheckSummary{
 		Ability:      domain.Strength,
 		Modifier:     domain.Strength,
+		Skill:        domain.Athletics,
 		Circumstance: domain.Disadvantage,
 		Dice:         domain.D20,
 		Roll:         domain.Roll{Number: 2, Preference: domain.Lower},

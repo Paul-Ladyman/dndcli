@@ -16,24 +16,36 @@ func getBoolInput(response string) bool {
 	return false
 }
 
-func getAbility(abilityString string) domain.Ability {
-	ability, abilityError := domain.AbilityFactory(abilityString)
-
-	if abilityError != nil {
-		skill, _ := domain.SkillFactory(abilityString)
+func getSummaryAbility(ability domain.Ability, abilityErr error, skill domain.Skill, skillErr error) domain.Ability {
+	if abilityErr == nil {
+		return ability
+	} else if skillErr == nil {
 		return skill.Ability
+	} else {
+		return ""
 	}
-	return ability
+}
+
+func getSummarySkill(skill domain.Skill, skillErr error) domain.Skill {
+	if skillErr != nil {
+		return domain.Skill{}
+	}
+	return skill
 }
 
 // AbilityCheck returns a summary of an ability check given an ability and an advantage circumstance
 func AbilityCheck(abilityString string, circumstanceString string, toolProficiency bool, skillProficiency bool) (domain.AbilityCheckSummary, error) {
 	circumstance, _ := domain.CircumstanceFactory(circumstanceString)
-	ability := getAbility(abilityString)
+	ability, abilityErr := domain.AbilityFactory(abilityString)
+	skill, skillErr := domain.SkillFactory(abilityString)
+
+	summaryAbility := getSummaryAbility(ability, abilityErr, skill, skillErr)
+	summarySkill := getSummarySkill(skill, skillErr)
 
 	return domain.AbilityCheckSummary{
-		Ability:      ability,
-		Modifier:     ability,
+		Ability:      summaryAbility,
+		Modifier:     summaryAbility,
+		Skill:        summarySkill,
 		Circumstance: circumstance,
 		Dice:         domain.D20,
 		Roll:         domain.RollFactory(circumstance),
