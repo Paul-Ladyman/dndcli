@@ -9,6 +9,8 @@ import (
 	"github.com/Paul-Ladyman/dndcli/domain"
 )
 
+var reader = bufio.NewReader(os.Stdin)
+
 func getBoolInput(response string) bool {
 	if strings.TrimSpace(response) == "y" {
 		return true
@@ -33,8 +35,35 @@ func getSummarySkill(skill domain.Skill, skillErr error) domain.Skill {
 	return skill
 }
 
+func readCircumstance() (string, error) {
+	fmt.Println("Does the player have Advantage (adv), Disadvantage (dis) or neither (press enter)?")
+	return reader.ReadString('\n')
+}
+
+func readSkillProficiency(ability string) bool {
+	skill, skillErr := domain.SkillFactory(ability)
+	var skillProficiency = false
+	if skillErr == nil {
+		fmt.Printf("Is the player proficient in the %s skill?\n", skill)
+		skillProficiencyResponse, _ := reader.ReadString('\n')
+		skillProficiency = getBoolInput(skillProficiencyResponse)
+	}
+	return skillProficiency
+}
+
+func readToolProficiency() bool {
+	fmt.Println("Is the player proficient with any relevant tools (y/n)?")
+	toolProficiencyResponse, _ := reader.ReadString('\n')
+	return getBoolInput(toolProficiencyResponse)
+}
+
+func readCooperation() (string, error) {
+	fmt.Println("Does the player have help (h), are the party working as a group (g) or neither (press enter)?")
+	return reader.ReadString('\n')
+}
+
 // AbilityCheck returns a summary of an ability check given an ability and an advantage circumstance
-func AbilityCheck(abilityString string, circumstanceString string, toolProficiency bool, skillProficiency bool) (domain.AbilityCheckSummary, error) {
+func AbilityCheck(abilityString string, circumstanceString string, toolProficiency bool, skillProficiency bool, cooperation string) (domain.AbilityCheckSummary, error) {
 	circumstance, _ := domain.CircumstanceFactory(circumstanceString)
 	ability, abilityErr := domain.AbilityFactory(abilityString)
 	skill, skillErr := domain.SkillFactory(abilityString)
@@ -51,27 +80,16 @@ func AbilityCheck(abilityString string, circumstanceString string, toolProficien
 		Roll:         domain.RollFactory(circumstance),
 		Target:       domain.DC,
 		Proficient:   toolProficiency || skillProficiency,
+		Cooperation:  domain.Individual,
 	}, nil
 }
 
 // AbilityCheckCli interactively retrieves information from the user relevant to ability checks
 func AbilityCheckCli(ability string) (domain.AbilityCheckSummary, error) {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Does the player have Advantage (adv), Disadvantage (dis) or neither (press enter)?")
-	circumstance, _ := reader.ReadString('\n')
-
-	skill, skillErr := domain.SkillFactory(ability)
-	var skillProficiency = false
-	if skillErr == nil {
-		fmt.Printf("Is the player proficient in the %s skill?\n", skill)
-		skillProficiencyResponse, _ := reader.ReadString('\n')
-		skillProficiency = getBoolInput(skillProficiencyResponse)
-	}
-
-	fmt.Println("Is the player proficient with any relevant tools (y/n)?")
-	toolProficiencyResponse, _ := reader.ReadString('\n')
-
-	toolProficiency := getBoolInput(toolProficiencyResponse)
-
-	return AbilityCheck(ability, strings.TrimSpace(circumstance), toolProficiency, skillProficiency)
+	circumstance, _ := readCircumstance()
+	skillProficiency := readSkillProficiency(ability)
+	toolProficiency := readToolProficiency()
+	cooperation, _ := readCooperation()
+	fmt.Println(">>> cooperation", cooperation)
+	return AbilityCheck(ability, strings.TrimSpace(circumstance), toolProficiency, skillProficiency, "")
 }

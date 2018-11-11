@@ -13,10 +13,11 @@ var summary = AbilityCheckSummary{
 	Roll{1, Higher},
 	DC,
 	true,
+	Individual,
 }
 
 func TestSummariseTarget(t *testing.T) {
-	expected := "Compare against the Difficulty Class (DC): Easy - 10, Medium - 15, Hard - 20"
+	expected := "Compare against the Difficulty Class (DC): Very Easy - 5, Easy - 10, Medium - 15, Hard - 20, Very Hard - 25, Nearly Impossible - 30"
 	result := summary.SummariseTarget()
 	if result != expected {
 		t.Errorf(" %q was not equal to %q", result, expected)
@@ -49,6 +50,7 @@ func TestSummariseAbilityAdv(t *testing.T) {
 		Roll{1, Higher},
 		DC,
 		false,
+		Individual,
 	}
 	expected := "Make a dexterity check with advantage"
 	result := summary.SummariseAbility()
@@ -67,6 +69,7 @@ func TestSummariseAbilityDis(t *testing.T) {
 		Roll{1, Higher},
 		DC,
 		false,
+		Individual,
 	}
 	expected := "Make a intelligence check with disadvantage"
 	result := summary.SummariseAbility()
@@ -85,6 +88,7 @@ func TestSummariseAbilityWithSkill(t *testing.T) {
 		Roll{1, Higher},
 		DC,
 		false,
+		Individual,
 	}
 	expected := "Make a strength (athletics) check"
 	result := summary.SummariseAbility()
@@ -119,6 +123,7 @@ func TestSummariseProficiencyFalse(t *testing.T) {
 		Roll{1, Higher},
 		DC,
 		false,
+		Individual,
 	}
 	expected := ""
 	result := summary.SummariseProficiency()

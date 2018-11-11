@@ -12,6 +12,7 @@ type AbilityCheckSummary struct {
 	Roll         Roll
 	Target       Target
 	Proficient   bool
+	Cooperation  Cooperation
 }
 
 func (summary AbilityCheckSummary) String() string {
