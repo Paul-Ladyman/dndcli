@@ -10,10 +10,22 @@ var summary = AbilityCheckSummary{
 	Skill{},
 	Neutral,
 	D20,
-	Roll{1, Higher},
+	Roll{1, Only},
 	DC,
 	true,
 	Individual,
+}
+
+var summaryWithHelp = AbilityCheckSummary{
+	Strength,
+	Strength,
+	Skill{},
+	Advantage,
+	D20,
+	Roll{2, Higher},
+	DC,
+	true,
+	Help,
 }
 
 func TestSummariseTarget(t *testing.T) {
@@ -105,9 +117,25 @@ func TestSummariseModifier(t *testing.T) {
 	}
 }
 
+func TestSummariseModifierWithHelp(t *testing.T) {
+	expected := "Add the highest available strength modifier (abilities section on character sheet)"
+	result := summaryWithHelp.SummariseModifier()
+	if result != expected {
+		t.Errorf(" %q was not equal to %q", result, expected)
+	}
+}
+
 func TestSummariseProficiencyTrue(t *testing.T) {
 	expected := "Add the player's proficiency bonus (proficiency bonus section on character sheet)"
 	result := summary.SummariseProficiency()
+	if result != expected {
+		t.Errorf(" %q was not equal to %q", result, expected)
+	}
+}
+
+func TestSummariseProficiencyTrueWithHelp(t *testing.T) {
+	expected := "Add the same player's proficiency bonus (proficiency bonus section on character sheet)"
+	result := summaryWithHelp.SummariseProficiency()
 	if result != expected {
 		t.Errorf(" %q was not equal to %q", result, expected)
 	}

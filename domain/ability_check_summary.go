@@ -25,7 +25,8 @@ func (summary AbilityCheckSummary) String() string {
 		Roll: %s,
 		Target: %s,
 		Proficient: %t
-	}`, summary.Ability, summary.Modifier, summary.Skill, summary.Circumstance, summary.Dice, summary.Roll, summary.Target, summary.Proficient)
+		Cooperation: %s
+	}`, summary.Ability, summary.Modifier, summary.Skill, summary.Circumstance, summary.Dice, summary.Roll, summary.Target, summary.Proficient, summary.Cooperation)
 }
 
 func getCheck(ability Ability, skill Skill) string {
@@ -59,13 +60,21 @@ func (summary AbilityCheckSummary) SummariseTarget() string {
 
 // SummariseModifier summarises which modifier to apply
 func (summary AbilityCheckSummary) SummariseModifier() string {
-	return fmt.Sprintf("Add the player's %s modifier (abilities section on character sheet)", summary.Modifier)
+	subject := "the player's"
+	if summary.Cooperation == Help {
+		subject = "the highest available"
+	}
+	return fmt.Sprintf("Add %s %s modifier (abilities section on character sheet)", subject, summary.Modifier)
 }
 
 // SummariseProficiency summarises whether a proficiency bonus should be added
 func (summary AbilityCheckSummary) SummariseProficiency() string {
 	if summary.Proficient {
-		return "Add the player's proficiency bonus (proficiency bonus section on character sheet)"
+		subject := "the player's"
+		if summary.Cooperation == Help {
+			subject = "the same player's"
+		}
+		return fmt.Sprintf("Add %s proficiency bonus (proficiency bonus section on character sheet)", subject)
 	}
 	return ""
 }

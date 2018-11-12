@@ -33,6 +33,19 @@ func skillCheck(proficient bool) domain.AbilityCheckSummary {
 	}
 }
 
+func checkWithHelp(circumstance domain.Circumstance, roll domain.Roll) domain.AbilityCheckSummary {
+	return domain.AbilityCheckSummary{
+		Ability:      domain.Charisma,
+		Modifier:     domain.Charisma,
+		Circumstance: circumstance,
+		Dice:         domain.D20,
+		Roll:         roll,
+		Target:       domain.DC,
+		Proficient:   true,
+		Cooperation:  domain.Help,
+	}
+}
+
 func TestStrengthAbilityCheck(t *testing.T) {
 	expected := basicCheck(domain.Strength)
 	result, _ := AbilityCheck("str", "", false, false, "")
@@ -151,6 +164,30 @@ func TestAbilityCheckWithSkill(t *testing.T) {
 func TestAbilityCheckWithSkillAndToolProficiency(t *testing.T) {
 	expected := skillCheck(true)
 	result, _ := AbilityCheck("ath", "dis", true, true, "")
+	if result != expected {
+		t.Errorf("Wrong ability check summary returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestAbilityCheckWithHelp(t *testing.T) {
+	expected := checkWithHelp(domain.Advantage, domain.Roll{Number: 2, Preference: domain.Higher})
+	result, _ := AbilityCheck("cha", "", true, false, "h")
+	if result != expected {
+		t.Errorf("Wrong ability check summary returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestAbilityCheckWithHelpAndAdvantage(t *testing.T) {
+	expected := checkWithHelp(domain.Advantage, domain.Roll{Number: 2, Preference: domain.Higher})
+	result, _ := AbilityCheck("cha", "adv", true, false, "h")
+	if result != expected {
+		t.Errorf("Wrong ability check summary returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestAbilityCheckWithHelpAndDisadvantage(t *testing.T) {
+	expected := checkWithHelp(domain.Neutral, domain.Roll{Number: 1, Preference: domain.Only})
+	result, _ := AbilityCheck("cha", "dis", true, false, "h")
 	if result != expected {
 		t.Errorf("Wrong ability check summary returned. %q was not equal to %q", result, expected)
 	}

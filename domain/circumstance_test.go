@@ -52,3 +52,57 @@ func TestCircumstanceFactoryUnknown(t *testing.T) {
 		t.Errorf("Expected error, actually got %q", result)
 	}
 }
+
+func TestResolveNeutralIndividual(t *testing.T) {
+	expected := Neutral
+	circumstance, _ := CircumstanceFactory("")
+	result := circumstance.Resolve(Individual)
+	if result != expected {
+		t.Errorf("Wrong circumstance returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestResolveNeutralHelp(t *testing.T) {
+	expected := Advantage
+	circumstance, _ := CircumstanceFactory("")
+	result := circumstance.Resolve(Help)
+	if result != expected {
+		t.Errorf("Wrong circumstance returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestResolveAdvantageIndividual(t *testing.T) {
+	expected := Advantage
+	circumstance, _ := CircumstanceFactory("adv")
+	result := circumstance.Resolve(Individual)
+	if result != expected {
+		t.Errorf("Wrong circumstance returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestResolveAdvantageHelp(t *testing.T) {
+	expected := Advantage
+	circumstance, _ := CircumstanceFactory("adv")
+	result := circumstance.Resolve(Help)
+	if result != expected {
+		t.Errorf("Wrong circumstance returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestResolveDisadvantageIndividual(t *testing.T) {
+	expected := Disadvantage
+	circumstance, _ := CircumstanceFactory("dis")
+	result := circumstance.Resolve(Individual)
+	if result != expected {
+		t.Errorf("Wrong circumstance returned. %q was not equal to %q", result, expected)
+	}
+}
+
+func TestResolveDisadvantageHelp(t *testing.T) {
+	expected := Neutral
+	circumstance, _ := CircumstanceFactory("dis")
+	result := circumstance.Resolve(Help)
+	if result != expected {
+		t.Errorf("Wrong circumstance returned. %q was not equal to %q", result, expected)
+	}
+}

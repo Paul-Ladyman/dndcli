@@ -35,6 +35,11 @@ func getSummarySkill(skill domain.Skill, skillErr error) domain.Skill {
 	return skill
 }
 
+func getCircumstance(circumstanceString string, cooperation domain.Cooperation) (domain.Circumstance, error) {
+	circumstance, _ := domain.CircumstanceFactory(circumstanceString)
+	return circumstance.Resolve(cooperation), nil
+}
+
 func readCircumstance() (string, error) {
 	fmt.Println("Does the player have Advantage (adv), Disadvantage (dis) or neither (press enter)?")
 	return reader.ReadString('\n')
@@ -63,13 +68,15 @@ func readCooperation() (string, error) {
 }
 
 // AbilityCheck returns a summary of an ability check given an ability and an advantage circumstance
-func AbilityCheck(abilityString string, circumstanceString string, toolProficiency bool, skillProficiency bool, cooperation string) (domain.AbilityCheckSummary, error) {
-	circumstance, _ := domain.CircumstanceFactory(circumstanceString)
+func AbilityCheck(abilityString string, circumstanceString string, toolProficiency bool, skillProficiency bool, cooperationString string) (domain.AbilityCheckSummary, error) {
 	ability, abilityErr := domain.AbilityFactory(abilityString)
 	skill, skillErr := domain.SkillFactory(abilityString)
 
 	summaryAbility := getSummaryAbility(ability, abilityErr, skill, skillErr)
 	summarySkill := getSummarySkill(skill, skillErr)
+
+	cooperation, _ := domain.CooperationFactory(strings.TrimSpace(cooperationString))
+	circumstance, _ := getCircumstance(circumstanceString, cooperation)
 
 	return domain.AbilityCheckSummary{
 		Ability:      summaryAbility,
@@ -80,7 +87,7 @@ func AbilityCheck(abilityString string, circumstanceString string, toolProficien
 		Roll:         domain.RollFactory(circumstance),
 		Target:       domain.DC,
 		Proficient:   toolProficiency || skillProficiency,
-		Cooperation:  domain.Individual,
+		Cooperation:  cooperation,
 	}, nil
 }
 
@@ -90,6 +97,5 @@ func AbilityCheckCli(ability string) (domain.AbilityCheckSummary, error) {
 	skillProficiency := readSkillProficiency(ability)
 	toolProficiency := readToolProficiency()
 	cooperation, _ := readCooperation()
-	fmt.Println(">>> cooperation", cooperation)
-	return AbilityCheck(ability, strings.TrimSpace(circumstance), toolProficiency, skillProficiency, "")
+	return AbilityCheck(ability, strings.TrimSpace(circumstance), toolProficiency, skillProficiency, cooperation)
 }
